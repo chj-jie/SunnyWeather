@@ -1,4 +1,4 @@
-package logic.model
+package com.example.sunnyweather.android.logic.model
 
 import com.google.gson.annotations.SerializedName
 

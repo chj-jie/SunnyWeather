@@ -1,14 +1,14 @@
-package logic
+package com.example.sunnyweather.android.logic
 
 
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import logic.dao.PlaceDao
-import logic.model.Place
-import logic.model.Weather
-import logic.network.SunnyWeatherNetwork
+import com.example.sunnyweather.android.logic.dao.PlaceDao
+import com.example.sunnyweather.android.logic.model.Place
+import com.example.sunnyweather.android.logic.model.Weather
+import com.example.sunnyweather.android.logic.network.SunnyWeatherNetwork
 
 object Repository {
     //仓库层统一的封装入口

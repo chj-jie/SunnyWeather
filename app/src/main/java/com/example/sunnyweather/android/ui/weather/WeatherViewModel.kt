@@ -1,10 +1,10 @@
-package com.sunnyweather.android.ui.weather
+package com.example.sunnyweather.android.ui.weather
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import logic.Repository
-import logic.model.Location
+import com.example.sunnyweather.android.logic.Repository
+import com.example.sunnyweather.android.logic.model.Location
 
 class WeatherViewModel : ViewModel() {
 

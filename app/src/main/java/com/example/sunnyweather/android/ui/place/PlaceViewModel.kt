@@ -1,12 +1,12 @@
-package com.sunnyweather.android.ui.place
+package com.example.sunnyweather.android.ui.place
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 
-import logic.Repository
+import com.example.sunnyweather.android.logic.Repository
 
-import logic.model.Place
+import com.example.sunnyweather.android.logic.model.Place
 
 class PlaceViewModel : ViewModel() {
 

@@ -1,9 +1,9 @@
-package logic.dao
+package com.example.sunnyweather.android.logic.dao
 
 import android.content.Context
 import com.example.sunnyweather.android.SunnyWeatherApplication
 import com.google.gson.Gson
-import logic.model.Place
+import com.example.sunnyweather.android.logic.model.Place
 import androidx.core.content.edit
 
 object PlaceDao {
@@ -12,9 +12,16 @@ object PlaceDao {
             putString("place", Gson().toJson(place))
         }
     }
-    fun getSavedPlace(): Place{
+    fun getSavedPlace(): Place?{
         val placejson= sharedPreferences().getString("place","")
-        return Gson().fromJson(placejson,Place::class.java)
+        if (placejson.isNullOrEmpty()) {
+            return null
+        }
+        return try {
+            Gson().fromJson(placejson,Place::class.java)
+        } catch (e: Exception) {
+            null
+        }
     }
 
     //判断是否有数据被存储

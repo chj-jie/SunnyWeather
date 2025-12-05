@@ -1,8 +1,8 @@
-package logic.network
+package com.example.sunnyweather.android.logic.network
 
 import com.example.sunnyweather.android.SunnyWeatherApplication
-import logic.model.DailyResponse
-import logic.model.RealtimeResponse
+import com.example.sunnyweather.android.logic.model.DailyResponse
+import com.example.sunnyweather.android.logic.model.RealtimeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
