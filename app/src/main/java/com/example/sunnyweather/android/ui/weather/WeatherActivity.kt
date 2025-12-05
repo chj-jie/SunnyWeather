@@ -13,7 +13,6 @@ import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -25,7 +24,7 @@ import com.example.sunnyweather.android.logic.model.Weather
 import com.example.sunnyweather.android.logic.model.getSky
 import java.text.SimpleDateFormat
 import java.util.Locale
-import com.example.sunnyweather.android.ui.weather.WeatherViewModel
+
 
 class WeatherActivity : AppCompatActivity(){
 
@@ -58,18 +57,9 @@ class WeatherActivity : AppCompatActivity(){
             swipeRefresh.isRefreshing=false
         })
         swipeRefresh.setColorSchemeResources(R.color.purple_500)
-        if (viewModel.locationLng.isNotEmpty() && viewModel.locationLat.isNotEmpty()) {
         refreshWeather()
-        } else {
-            Log.e("WeatherActivity", "locationLng or locationLat is empty, cannot refresh weather")
-        }
         swipeRefresh.setOnRefreshListener {
-            if (viewModel.locationLng.isNotEmpty() && viewModel.locationLat.isNotEmpty()) {
             refreshWeather()
-            } else {
-                swipeRefresh.isRefreshing = false
-                Toast.makeText(this, "位置信息缺失，无法获取天气", Toast.LENGTH_SHORT).show()
-            }
         }
 
         //滑动菜单
@@ -96,13 +86,6 @@ class WeatherActivity : AppCompatActivity(){
     }
 
     fun refreshWeather(){
-        if (viewModel.locationLng.isEmpty() || viewModel.locationLat.isEmpty()) {
-            Log.e("WeatherActivity", "Cannot refresh weather: locationLng or locationLat is empty")
-            Toast.makeText(this, "位置信息缺失，无法获取天气", Toast.LENGTH_SHORT).show()
-            val swipeRefresh: SwipeRefreshLayout = findViewById(R.id.swipeRefresh)
-            swipeRefresh.isRefreshing = false
-            return
-        }
         val swipeRefresh: SwipeRefreshLayout = findViewById(R.id.swipeRefresh)
         viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
         swipeRefresh.isRefreshing=true

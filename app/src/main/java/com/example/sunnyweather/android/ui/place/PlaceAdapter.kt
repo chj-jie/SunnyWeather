@@ -24,15 +24,12 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
         val view = LayoutInflater.from(parent.context).inflate(R.layout.place_item,parent,false)
         val holder= ViewHolder(view)
         holder.itemView.setOnClickListener {
-            val position= holder.bindingAdapterPosition
-            if (position == RecyclerView.NO_POSITION || position < 0 || position >= placeList.size) {
-                return@setOnClickListener
-            }
+            val position= holder.adapterPosition
             val place= placeList[position]
 
             //对PlaceFragment所处的Activity进行判断
             val activity = fragment.activity
-            if (activity != null && activity is WeatherActivity){
+            if (activity is WeatherActivity){
                 //如果是在WeatherActivity中，就关闭drawerLayout
                 val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawerLayout)
                 drawerLayout.closeDrawers()
@@ -40,7 +37,7 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
                 activity.viewModel.locationLat = place.location.lat
                 activity.viewModel.placeName = place.name
                 activity.refreshWeather()
-            }else if (activity != null){
+            }else{
                 //如果是在MainActivity中
                 val intent = Intent(parent.context, WeatherActivity::class.java).apply {
                     putExtra("location_lng",place.location.lng)
@@ -48,7 +45,7 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
                     putExtra("place_name",place.name)
                 }
                 fragment.startActivity(intent)
-                activity.finish()
+                fragment.activity?.finish()
             }
 
             fragment.viewModel.savePlace(place)

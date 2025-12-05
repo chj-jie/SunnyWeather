@@ -12,16 +12,9 @@ object PlaceDao {
             putString("place", Gson().toJson(place))
         }
     }
-    fun getSavedPlace(): Place?{
+    fun getSavedPlace(): Place{
         val placejson= sharedPreferences().getString("place","")
-        if (placejson.isNullOrEmpty()) {
-            return null
-        }
-        return try {
-            Gson().fromJson(placejson,Place::class.java)
-        } catch (e: Exception) {
-            null
-        }
+        return Gson().fromJson(placejson,Place::class.java)
     }
 
     //判断是否有数据被存储
