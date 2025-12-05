@@ -1,6 +1,7 @@
 package com.sunnyweather.android.ui.place
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sunnyweather.android.R
-import logic.Repository
-import ui.place.PlaceAdapter
-import ui.place.PlaceViewModel
+import com.sunnyweather.android.ui.weather.WeatherActivity
 
 
 class PlaceFragment : Fragment() {
@@ -36,6 +35,18 @@ class PlaceFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (viewModel.isPlaceSaved()){
+            val place =viewModel.getSavedPlace()
+            val intent= Intent(context, WeatherActivity::class.java).apply {
+                putExtra("location_lng",place.location.lng)
+                putExtra("location_lat",place.location.lat)
+                putExtra("place_name",place.name)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
+
         val  recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView)
         val searchPlaceEdit = view?.findViewById<EditText>(R.id.searchPlaceEdit)
         val bgImageView = view?.findViewById<ImageView>(R.id.bgImageView)
@@ -48,8 +59,7 @@ class PlaceFragment : Fragment() {
         searchPlaceEdit?.doAfterTextChanged { editable ->
             val content = editable?.toString().orEmpty()
             if (content.isNotEmpty()){
-                Repository.searchPlaces(content)
-
+                viewModel.searchPlaces(content)
             }else{
                 recyclerView?.visibility = View.GONE
                 bgImageView?.visibility = View.VISIBLE
